@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         requestAuth()
+        notificationCenter.delegate = self
         return true
     }
 
@@ -36,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.shared.applicationIconBadgeNumber = 0 // обнуляет бэйжди
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -55,6 +57,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationCenter.getNotificationSettings { (settings) in
             print("Settings: ", settings)
         }
+    }
+    
+    func scheduleNotification(notificationType: String) {
+        let content = UNMutableNotificationContent()
+        let userAction = "User Action"
+        content.title = notificationType
+        content.body = "This is example how to create : \(notificationType)"
+        content.sound = UNNotificationSound.default
+        content.badge = 1
+        content.categoryIdentifier = userAction
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        let identifier = "local notification"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error: ", error.localizedDescription)
+            }
+        }
+        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
+        let deleteAction = UNNotificationAction(identifier: "Delete", title: "Delete", options: [.destructive])
+        let category = UNNotificationCategory(identifier: userAction, actions: [snoozeAction, deleteAction], intentIdentifiers: [], options: [])
+        notificationCenter.setNotificationCategories([category])
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    } // получение уведомлений даже тогда, когда приложение находится на 1 плане
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.notification.request.identifier == "local notification" {
+            print("response.notification.request.identifier == local notification ")
+        } //  обработка полученного уведомления
+        
+        switch response.actionIdentifier {
+        case UNNotificationDismissActionIdentifier:
+            print("dismiss action")
+        case UNNotificationDefaultActionIdentifier:
+            print("default action")
+        case "Snooze":
+            print("Snooze action")
+            scheduleNotification(notificationType: "Reminder")
+        case "Delete":
+            print("Delete")
+            
+        default:
+            print("unknown action")
+        }
+        completionHandler()
     }
 }
 

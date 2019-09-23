@@ -1,14 +1,9 @@
-//
-//  TableViewController.swift
-//  LocalNotification
-//
-//  Created by Debash on 05.06.2018.
-//  Copyright © 2018 swiftbook.ru. All rights reserved.
-//
 
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    let appDelagate = UIApplication.shared.delegate as? AppDelegate
     
     let notifications = ["Local Notification",
                          "Local Notification with Action",
@@ -45,7 +40,9 @@ class TableViewController: UITableViewController {
                                       message: "After 5 seconds " + notificationType + " will appear",
                                       preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.appDelagate?.scheduleNotification(notificationType: notificationType)
+        }
         
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
@@ -54,5 +51,6 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.textLabel?.textColor = .white
+        
     }
 }
