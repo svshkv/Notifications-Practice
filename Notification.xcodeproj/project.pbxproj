@@ -12,6 +12,7 @@
 		228D98022338F87A00E71003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 228D98012338F87A00E71003 /* Assets.xcassets */; };
 		228D98052338F87A00E71003 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228D98032338F87A00E71003 /* LaunchScreen.storyboard */; };
 		228D980D2338F89000E71003 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D980C2338F89000E71003 /* TableViewController.swift */; };
+		228D980F2339042400E71003 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D980E2339042400E71003 /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		228D98042338F87A00E71003 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		228D98062338F87A00E71003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		228D980C2338F89000E71003 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		228D980E2339042400E71003 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				228D97FA2338F87900E71003 /* AppDelegate.swift */,
+				228D980E2339042400E71003 /* Notifications.swift */,
 				228D980C2338F89000E71003 /* TableViewController.swift */,
 				228D97FE2338F87900E71003 /* Main.storyboard */,
 				228D98012338F87A00E71003 /* Assets.xcassets */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228D980F2339042400E71003 /* Notifications.swift in Sources */,
 				228D980D2338F89000E71003 /* TableViewController.swift in Sources */,
 				228D97FB2338F87900E71003 /* AppDelegate.swift in Sources */,
 			);
